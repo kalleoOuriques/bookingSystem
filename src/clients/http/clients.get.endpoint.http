@@ -1,0 +1,11 @@
+GET http://localhost:3000/clients
+Content-Type: application/json
+
+{
+    "telefone": "48996567756",
+    "reg": "130.080.199-94",
+    "firstName": "Kalleo",
+    "lastName": "Ouriques",
+    "email": "kalleo.ao@gmail.com"
+
+} 

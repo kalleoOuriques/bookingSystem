@@ -1,0 +1,9 @@
+POST http://localhost:3000/clients
+Content-Type: application/json
+
+{
+    "telefone": "99722657",
+    "reg": "777777777",
+    "firstName": "Carlos",
+    "lastName": "Machado"
+} 

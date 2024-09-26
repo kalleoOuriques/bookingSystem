@@ -1,0 +1,7 @@
+PATCH http://localhost:3000/clients
+Content-Type: application/json
+
+{
+    "reg": "12345678910",
+    "firstName": "Kalle"
+} 

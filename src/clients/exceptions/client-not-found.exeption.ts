@@ -1,9 +1,10 @@
-export class UserNotFoundException extends Error{
+export class ClientNotFoundException extends Error{
     statusCode: number;
+    
     constructor(message:string){
 
         super(message);
-        this.name = "UserNotFoundException"
+        this.name = "ClientNotFoundException"
         this.statusCode = 404
 
     }

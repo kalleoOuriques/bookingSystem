@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ClientsModule } from './clients/clients.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ApartmentsModule } from './apartments/apartments.module';
+import { PaymentsModule } from './payments/payments.module';
 import * as dotenv from 'dotenv';
 
 require('dotenv').config()
@@ -20,7 +22,9 @@ require('dotenv').config()
         database: process.env.DB_NAME
       })
     }),
-    ClientsModule],
+    ClientsModule,
+    ApartmentsModule,
+    PaymentsModule],
   controllers: [AppController],
   providers: [AppService],
 })

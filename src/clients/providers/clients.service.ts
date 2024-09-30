@@ -4,8 +4,8 @@ import { Client } from '../client.entity';
 import { Repository } from 'typeorm';
 import { CreateClientDto } from '../dtos/create-client.dto';
 import { UpdateClientDto } from '../dtos/update-client.dto';
-import { UserAlreadyExistsException } from '../exceptions/user-already-exists.exception';
-import { UserNotFoundException } from '../exceptions/user-not-found.exeption';
+import { ClientAlreadyExistsException } from '../exceptions/client-already-exists.exception';
+import { ClientNotFoundException } from '../exceptions/client-not-found.exeption';
 
 @Injectable()
 export class ClientsService {
@@ -37,7 +37,7 @@ export class ClientsService {
         // Check unique properties
         if (existingClient){
             
-            throw new UserAlreadyExistsException(
+            throw new ClientAlreadyExistsException(
                 "Telefone wass already registered."
             )
         }    
@@ -83,8 +83,8 @@ export class ClientsService {
                 
         } 
 
-        throw new UserNotFoundException(
-            "User not found by telefone number"
+        throw new ClientNotFoundException(
+            "Client not found by telefone number"
         )
         
     }

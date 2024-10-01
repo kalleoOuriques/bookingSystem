@@ -60,8 +60,8 @@ export class ApartmentsService {
         }
 
         if (apartment) {
-            updateApartmentDto.people = updateApartmentDto.people ? updateApartmentDto.people : apartment.people;
-            updateApartmentDto.rooms = updateApartmentDto.rooms ? updateApartmentDto.rooms : apartment.rooms;
+            apartment.people = updateApartmentDto.people ? updateApartmentDto.people : apartment.people;
+            apartment.rooms = updateApartmentDto.rooms ? updateApartmentDto.rooms : apartment.rooms;
             
             return this.apartmentsRepository.update(
                 {name: apartment.name},

@@ -14,7 +14,49 @@ export class ClientsService {
         private clientRepository: Repository<Client>
     ){}
 
+    public async getClient(id: number){
+
+        try {
+            var client = await this.clientRepository.findOneBy({id: id})
+        } catch (error){
+
+            throw new RequestTimeoutException(error,
+                {description: "Error connecting to the database"}
+            )
+        }
+
+        if (client) {
+            return client
+        }
+
+        throw new ClientNotFoundException(
+            "A client was not found by the id"
+        )
+    }
+
+    public async searchClients(telefone, reg, firstName, lastName){
     
+        let query = {}
+
+        if (reg) query["reg"] = reg;
+        if (firstName) query["firstName"] = firstName;
+        if (lastName) query["lastName"] = lastName;
+        if (telefone) query["telefone"] = telefone;
+
+
+        try {
+            var listClients =  await this.clientRepository.find({
+                where: query
+            })
+        } catch (error) {
+
+            throw new RequestTimeoutException(error,{
+                description: "Error connecting to the database"
+            })
+        }
+
+        return listClients;
+    }
 
     // Create a client and registrate in the database
     public async createClient(createClientDto: CreateClientDto){
@@ -72,9 +114,9 @@ export class ClientsService {
         
         // Update client info
         if (client) {
-            client.firstName = updateClientDto.firstName ? updateClientDto.firstName: client.firstName
-            client.lastName = updateClientDto.lastName ? updateClientDto.lastName : client.lastName
-            client.reg = updateClientDto.reg ? updateClientDto.reg : client.reg
+            client.firstName = updateClientDto.firstName ?? client.firstName;
+            client.lastName = updateClientDto.lastName ?? client.lastName;
+            client.reg = updateClientDto.reg ?? client.reg;
     
             return this.clientRepository.update(
                 {telefone: updateClientDto.telefone}, 

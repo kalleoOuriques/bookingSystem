@@ -131,4 +131,19 @@ export class ClientsService {
         
     }
 
+    public async deleteClient(clientId: number){
+
+        try {
+            var client = await this.clientRepository.findOneBy({id: clientId});
+        } catch(error){
+            
+            throw new RequestTimeoutException(error, {
+                description: "Error connecting to the database"
+                }
+            )
+        }
+
+        return await this.clientRepository.delete(client);
+    }
+
 }

@@ -10,13 +10,13 @@ export class CreatePaymentDto{
     @Type(()=> Number)
     amount: number;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsEnum(paymentType)
-    type: paymentType;
+    type?: paymentType;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsEnum(paymentStatus)
-    status: paymentStatus;
+    status?: paymentStatus;
 
     @IsISO8601()
     @IsOptional()

@@ -1,4 +1,4 @@
-import { Controller, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Patch, Post } from '@nestjs/common';
 import { CreatePaymentDto } from './dtos/create-payment.dto';
 import { UpdatePaymentDto } from './dtos/update-payment.dto';
 import { PaymentsService } from './provider/payments.service';
@@ -10,13 +10,13 @@ export class PaymentsController {
     ){}
 
     @Post()
-    public createPayment(createPaymentDto: CreatePaymentDto){
-
+    public createPayment(@Body() createPaymentDto: CreatePaymentDto){
+        console.log(createPaymentDto);
         return this.paymentsService.createPayment(createPaymentDto);
     }
 
     @Patch()
-    public updatePayment(updatePaymentDto: UpdatePaymentDto){
+    public updatePayment(@Body() updatePaymentDto: UpdatePaymentDto){
 
         return this.paymentsService.updatePayment(updatePaymentDto);
     }

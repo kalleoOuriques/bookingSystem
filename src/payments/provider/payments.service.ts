@@ -1,4 +1,4 @@
-import { Injectable, RequestTimeoutException } from '@nestjs/common';
+import { Body, Injectable, Post, RequestTimeoutException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Payment } from '../payment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,9 +15,10 @@ export class PaymentsService {
     ){}
 
     public async createPayment(createPaymentDto: CreatePaymentDto){
-
+        console.log("Create payment");
         try{
             var newPayment = this.paymentRepository.create(createPaymentDto);
+            console.log(newPayment);
             newPayment = await this.paymentRepository.save(newPayment);
         
         } catch (error) {

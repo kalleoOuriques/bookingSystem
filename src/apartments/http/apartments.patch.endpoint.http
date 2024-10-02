@@ -1,0 +1,8 @@
+PATCH http://localhost:3000/apartments
+Content-Type: application/json
+{
+   "id": 1,
+   "name": "ouvidor",
+   "people": "5",
+   "rooms": "2"
+}

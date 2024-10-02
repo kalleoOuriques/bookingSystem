@@ -4,7 +4,10 @@ import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 @Entity()
 export class Apartment{
 
-    @PrimaryColumn({
+    @PrimaryGeneratedColumn()
+    id: number;
+    
+    @Column({
         type: "varchar",
         length: 32,
         nullable: false,

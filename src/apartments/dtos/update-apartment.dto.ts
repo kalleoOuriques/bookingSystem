@@ -5,10 +5,14 @@ import { IsNotEmpty, IsOptional, IsString, MaxLength,  MinLength } from "class-v
 export class UpdateApartmentDto{
 
     @IsNotEmpty()
+    @Type(()=>Number)
+    id: number;
+
+    @IsOptional()
     @IsString()
     @MaxLength(32)
     @MinLength(2)
-    name: string;
+    name?: string;
 
     @IsOptional()
     @Type(()=>Number)

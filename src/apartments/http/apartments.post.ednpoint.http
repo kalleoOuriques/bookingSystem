@@ -1,0 +1,7 @@
+POST http://localhost:3000/apartments
+Content-Type: application/json
+{
+    "name": "ibiraquera",
+    "people": "3",
+    "rooms": "4"
+}

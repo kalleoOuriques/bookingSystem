@@ -1,4 +1,4 @@
-import { Injectable, RequestTimeoutException } from '@nestjs/common';
+import { Body, Injectable, RequestTimeoutException } from '@nestjs/common';
 import { CreateApartmentDTO } from '../dtos/create-apartment.dto';
 import { Apartment } from '../apartment.entity';
 import { Repository } from 'typeorm';
@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ApartmentAlreadyExists } from '../exceptions/apartment-already-exists.exception';
 import { UpdateApartmentDto } from '../dtos/update-apartment.dto';
 import { ApartmentNotFoundException } from '../exceptions/apartment-not-found.exception.dto';
+import { throwError } from 'rxjs';
 
 @Injectable()
 export class ApartmentsService {
@@ -47,9 +48,7 @@ export class ApartmentsService {
     public async updateApartment(updateApartmentDto: UpdateApartmentDto){
         // Check connection
         try{
-            var apartment = await this.apartmentsRepository.findOne({
-                where: {name: updateApartmentDto.name}
-        })
+            var apartment = await this.apartmentsRepository.findOneBy({id: updateApartmentDto.id})
         } catch (error) {
             
             throw new RequestTimeoutException(error,
@@ -60,11 +59,12 @@ export class ApartmentsService {
         }
 
         if (apartment) {
-            apartment.people = updateApartmentDto.people ? updateApartmentDto.people : apartment.people;
-            apartment.rooms = updateApartmentDto.rooms ? updateApartmentDto.rooms : apartment.rooms;
-            
+            apartment.people = updateApartmentDto.people ?? apartment.people;
+            apartment.rooms = updateApartmentDto.rooms ?? apartment.rooms;
+            apartment.name = updateApartmentDto.name ?? apartment.name;
+
             return this.apartmentsRepository.update(
-                {name: apartment.name},
+                {id: apartment.id},
                 apartment
             )
         }
@@ -72,5 +72,35 @@ export class ApartmentsService {
         throw new ApartmentNotFoundException(
             "No apartment was found by the submitted name"
         )
+    }
+
+    public async getAllApartments(){
+
+        try{
+            var apartments = await this.apartmentsRepository.find();
+
+        } catch (error) {
+
+            throw new RequestTimeoutException(error,{
+                description: "Error connecting to the database"
+            });
+        }
+
+        return apartments;
+    }  
+    
+    public async deleteApartment(apartmentId: number){
+        try{
+            var apartment = await this.apartmentsRepository.findOneBy({id : apartmentId});
+
+        } catch (error) {
+
+            throw new RequestTimeoutException(error, 
+            {
+                description: "Error connecting to the database"
+            })
+        }
+
+        return this.apartmentsRepository.delete(apartment);
     }
 }

@@ -22,12 +22,17 @@ export class ClientsController {
         return this.clientsService.updateClient(updateClientDto);
     }
 
+    @Delete('delete/:id')
+    public deleteClient(@Param('id', ParseIntPipe) id: number){
+        return this.clientsService.deleteClient(id);
+    }
+
     @Get('client/:id?')
     public getClient(@Param('id', ParseIntPipe) id: number){
         return this.clientsService.getClient(id);
     }
 
-    @Get('search?')
+    @Get('search')
     public searchClients(
         @Query('telefone') telefone: SearchClientDto ,
         @Query('reg') reg: SearchClientDto,

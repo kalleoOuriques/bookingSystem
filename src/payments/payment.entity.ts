@@ -9,7 +9,7 @@ export class Payment{
     id: number;
 
     @Column({
-        type: "double precision",
+        type: "int",
         nullable: false
     })
     amount: number;

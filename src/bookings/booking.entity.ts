@@ -14,13 +14,13 @@ export class Booking{
         type: "timestamp",
         nullable: false
     })
-    startdate: Date;
+    checkin: Date;
 
     @Column({
         type: "timestamp",
         nullable: false
     })
-    enddate: Date;
+    checkout: Date;
 
     @Column({
         type: "enum",

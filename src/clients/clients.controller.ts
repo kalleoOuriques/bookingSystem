@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query 
 import { CreateClientDto} from './dtos/create-client.dto';
 import { UpdateClientDto } from './dtos/update-client.dto';
 import { ClientsService } from './providers/clients.service';
-import { SearchClientDto } from './dtos/search-client.dto';
+import { SearchClientsDto } from './dtos/search-clients.dto';
 
 
 @Controller('clients')
@@ -34,13 +34,10 @@ export class ClientsController {
 
     @Get('search')
     public searchClients(
-        @Query('telefone') telefone: SearchClientDto ,
-        @Query('reg') reg: SearchClientDto,
-        @Query('firstname') firsName: SearchClientDto,
-        @Query('lastname') lastName: SearchClientDto
+        @Query() searchClientsDto: SearchClientsDto ,
     ){
 
-        return this.clientsService.searchClients(telefone, reg, firsName, lastName)
+        return this.clientsService.searchClients(searchClientsDto)
     }
 
 }

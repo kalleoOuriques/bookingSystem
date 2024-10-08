@@ -34,19 +34,12 @@ export class ClientsService {
         )
     }
 
-    public async searchClients(telefone, reg, firstName, lastName){
-    
-        let query = {}
-
-        if (reg) query["reg"] = reg;
-        if (firstName) query["firstName"] = firstName;
-        if (lastName) query["lastName"] = lastName;
-        if (telefone) query["telefone"] = telefone;
+    public async searchClients(searchClientsDto){
 
 
         try {
             var listClients =  await this.clientRepository.find({
-                where: query
+                where: searchClientsDto
             })
         } catch (error) {
 

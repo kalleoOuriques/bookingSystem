@@ -9,6 +9,7 @@ import { ClientsService } from 'src/clients/providers/clients.service';
 import { ApartmentsService } from 'src/apartments/provider/apartments.service';
 import {ApartmentAlreadyBookedException } from '../exceptions/apartment-already-booked.exception';
 import { BookingNotFoundException } from '../exceptions/booking-not-found.exception';
+import { SearchBookingsDto } from '../dtos/search-booking.dto';
 
 @Injectable()
 export class BookingsService {
@@ -26,8 +27,8 @@ export class BookingsService {
             var existingConflicts = await this.bookingRepository.findOne({
                 where:{
                     apartment: {id: createBookingDto.apartmentId},
-                    startdate: LessThanOrEqual(createBookingDto.enddate),
-                    enddate: MoreThanOrEqual(createBookingDto.startdate)
+                    checkin: LessThanOrEqual(createBookingDto.checkout),
+                    checkout: MoreThanOrEqual(createBookingDto.checkin)
                 },
                 relations : ['apartment']
             })
@@ -101,4 +102,58 @@ export class BookingsService {
         )
     }
 
+    public async searchBookings(searchBookingsDto: SearchBookingsDto){
+
+        var query = {}
+
+        if(searchBookingsDto.checkin && searchBookingsDto.checkout){
+            query["checkin"] = LessThanOrEqual(searchBookingsDto.checkout);
+            query["checkout"] = MoreThanOrEqual(searchBookingsDto.checkin);
+        }
+
+        if(searchBookingsDto.apartmentId){
+            query["apartment"] = {id: searchBookingsDto.apartmentId};
+        }
+
+        if(searchBookingsDto.clientId){
+            query["client"] = {id: searchBookingsDto.clientId};
+        }
+
+        if(searchBookingsDto.status){
+            query["status"] = searchBookingsDto.status;
+        }
+
+        try {
+            var bookings = await this.bookingRepository.find({
+                where: query
+            })
+
+        } catch (error) {
+            throw new RequestTimeoutException(error, {
+                description: "Error connecting to the database"
+            })
+        }
+
+        return bookings;
+    }
+
+    public async getBooking(bookingId: number){
+
+        try{
+            var booking = await this.bookingRepository.findOneBy({id: bookingId})
+
+        }catch(error){
+            throw new RequestTimeoutException(error, {
+                description: "Error connecting to the database"
+            })
+        }
+
+        if(booking){
+            return booking;
+        }
+        
+        throw new BookingNotFoundException(
+            "A booking was not able to be found by the id"
+        )
+    }
 }

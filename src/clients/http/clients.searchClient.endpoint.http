@@ -1,1 +1,1 @@
-GET http://localhost:3000/clients/search
+GET http://localhost:3000/clients/search?telefone=48996567756

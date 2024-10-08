@@ -7,11 +7,11 @@ export class CreateBookingDto {
 
     @IsISO8601()
     @IsNotEmpty()
-    startdate: Date;
+    checkin: Date;
 
     @IsISO8601()
     @IsNotEmpty()
-    enddate: Date;
+    checkout: Date;
 
     @IsEnum(statusBooking)
     @IsNotEmpty()

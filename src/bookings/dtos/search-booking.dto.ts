@@ -1,13 +1,16 @@
-import { IsEnum, IsNumber, IsOptional } from "class-validator";
+import { IsEnum, IsISO8601, IsNumber, IsOptional } from "class-validator";
 import { statusBooking } from "../enums/statusBooking.enum";
-import { IntervalBooking } from "../enums/intervalBooking.enum";
 import { Type } from "class-transformer";
 
 export class SearchBookingsDto{
 
     @IsOptional()
-    @Type(()=>IntervalBooking)
-    interval?: IntervalBooking;
+    @IsISO8601()
+    checkin?: Date;
+
+    @IsOptional()
+    @IsISO8601()
+    checkout?: Date;
 
     @IsOptional()
     @Type(()=>Number)

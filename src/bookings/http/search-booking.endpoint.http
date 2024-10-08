@@ -1,0 +1,2 @@
+GET http://localhost:3000/bookings/search?checkin=2024-11-01 14:00:00.000&checkout=2024-11-01 14:00:00.000&clientId=2
+Content-Type: application/json

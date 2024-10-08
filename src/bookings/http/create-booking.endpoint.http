@@ -1,0 +1,11 @@
+POST http://localhost:3000/bookings
+Content-Type: application/json
+
+{   
+    "startdate": "2024-11-01 14:00:00.000",
+    "enddate": "2024-11-20 11:00:00.000",
+    "status": "booked",
+    "payment": {"amount": "700"},
+    "clientId": "2",
+    "apartmentId": "4"
+}

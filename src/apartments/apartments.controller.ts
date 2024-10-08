@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
-import { CreateApartmentDTO } from './dtos/create-apartment.dto';
+import { CreateApartmentDto } from './dtos/create-apartment.dto';
 import { ApartmentsService } from './provider/apartments.service';
 import { UpdateApartmentDto } from './dtos/update-apartment.dto';
 
@@ -10,7 +10,7 @@ export class ApartmentsController {
     ){}
     
     @Post()
-    public createApartment(@Body() createApartmentDto: CreateApartmentDTO){
+    public createApartment(@Body() createApartmentDto: CreateApartmentDto){
         return this.apartmentsService.createApartment(createApartmentDto);
     }
 

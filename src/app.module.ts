@@ -5,6 +5,7 @@ import { ClientsModule } from './clients/clients.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApartmentsModule } from './apartments/apartments.module';
 import { PaymentsModule } from './payments/payments.module';
+import { BookingsModule } from './bookings/bookings.module';
 import * as dotenv from 'dotenv';
 
 require('dotenv').config()
@@ -24,7 +25,8 @@ require('dotenv').config()
     }),
     ClientsModule,
     ApartmentsModule,
-    PaymentsModule],
+    PaymentsModule,
+    BookingsModule],
   controllers: [AppController],
   providers: [AppService],
 })

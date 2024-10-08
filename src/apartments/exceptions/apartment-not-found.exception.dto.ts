@@ -5,6 +5,6 @@ export class ApartmentNotFoundException extends Error {
     constructor(message){
         super(message);
         this.name = "ApartmentNotFoundException";
-        this.statusCode = this.statusCode;
+        this.statusCode = 404;
     }
 }

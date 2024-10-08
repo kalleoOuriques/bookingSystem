@@ -2,7 +2,7 @@ import { Type } from "class-transformer";
 import { IsNotEmpty, IsString, MaxLength,  MinLength } from "class-validator";
 
 
-export class CreateApartmentDTO{
+export class CreateApartmentDto{
     
     @IsNotEmpty()
     @IsString()

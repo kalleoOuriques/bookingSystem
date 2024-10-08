@@ -1,12 +1,12 @@
 import { Body, Injectable, RequestTimeoutException } from '@nestjs/common';
-import { CreateApartmentDTO } from '../dtos/create-apartment.dto';
+import { CreateApartmentDto } from '../dtos/create-apartment.dto';
 import { Apartment } from '../apartment.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ApartmentAlreadyExists } from '../exceptions/apartment-already-exists.exception';
 import { UpdateApartmentDto } from '../dtos/update-apartment.dto';
 import { ApartmentNotFoundException } from '../exceptions/apartment-not-found.exception.dto';
-import { throwError } from 'rxjs';
+
 
 @Injectable()
 export class ApartmentsService {
@@ -15,7 +15,7 @@ export class ApartmentsService {
         private apartmentsRepository: Repository<Apartment>
     ){}
 
-    public async createApartment(createApartmentDto: CreateApartmentDTO){
+    public async createApartment(createApartmentDto: CreateApartmentDto){
 
         // Check connection
         try{
@@ -87,7 +87,29 @@ export class ApartmentsService {
         }
 
         return apartments;
-    }  
+    }
+    
+
+    public async getApartment(id: number){
+
+        try {
+            var apartment = await this.apartmentsRepository.findOneBy({id: id})
+        } catch (error){
+
+            throw new RequestTimeoutException(error,
+                {description: "Error connecting to the database"}
+            )
+        }
+
+        if (apartment) {
+            return apartment
+        }
+
+        throw new ApartmentNotFoundException(
+            "The apartment was not found by the id"
+        )
+    }
+    
     
     public async deleteApartment(apartmentId: number){
         try{
